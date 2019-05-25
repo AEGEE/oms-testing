@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+    # run 3 agents, TeamCity setup allows it
+    teamcity-agent-1:
+        restart: always
+        build:
+            context: ./agent
+            dockerfile: ./Dockerfile
+        volumes:
+            - ./data/teamcity-agent-1/conf:/data/teamcity_agent/conf
+        environment:
+            AGENT_NAME: teamcity-agent-1
+            SERVER_URL: http://teamcity-server:8111/
+            DOCKER_IN_DOCKER: start
+        privileged: true # for running Docker in Docker
+    teamcity-agent-2:
+        restart: always
+        build:
+            context: ./agent
+            dockerfile: ./Dockerfile
+        volumes:
+            - ./data/teamcity-agent-2/conf:/data/teamcity_agent/conf
+        environment:
+            AGENT_NAME: teamcity-agent-2
+            SERVER_URL: http://teamcity-server:8111/
+            DOCKER_IN_DOCKER: start
+        privileged: true # for running Docker in Docker
+    teamcity-agent-3:
+        restart: always
+        build:
+            context: ./agent
+            dockerfile: ./Dockerfile
+        volumes:
+            - ./data/teamcity-agent-3/conf:/data/teamcity_agent/conf
+        environment:
+            AGENT_NAME: teamcity-agent-3
+            SERVER_URL: http://teamcity-server:8111/
+            DOCKER_IN_DOCKER: start
+        privileged: true # for running Docker in Docker
+    # also run the server
+    teamcity-server:
+        restart: always
+        image: jetbrains/teamcity-server
+        volumes:
+            - ./data/teamcity-server/data:/data/teamcity_server/datadir
+            - ./data/teamcity-server/logs:/opt/teamcity/logs
+        ports:
+            - 8080:8111
+        privileged: true
+    # and for some of the modules, postgresql is required
+    postgres:
+        restart: always
+        image: postgres:10
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+        expose:
+            - 5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+
+networks:
+  default:
+    external:
+      name: teamcity
