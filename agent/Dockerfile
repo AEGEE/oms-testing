@@ -1,4 +1,4 @@
-FROM jetbrains/teamcity-minimal-agent
+FROM jetbrains/teamcity-agent
 
 # installing all required packaged
 RUN apt-get update && apt-get install -y git sudo curl bash
