@@ -46,7 +46,7 @@ services:
             - ./data/teamcity-server/data:/data/teamcity_server/datadir
             - ./data/teamcity-server/logs:/opt/teamcity/logs
         ports:
-            - 8080:8111
+            - 80:8111
         privileged: true
     # and for some of the modules, postgresql is required
     postgres:
