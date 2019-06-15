@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2.4'
 
 services:
     # run 3 agents, TeamCity setup allows it
@@ -14,6 +14,8 @@ services:
             SERVER_URL: http://teamcity-server:8111/
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
+        cpus: 0.15
+        mem_limit: 500mb
     teamcity-agent-2:
         restart: always
         build:
@@ -26,6 +28,8 @@ services:
             SERVER_URL: http://teamcity-server:8111/
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
+        cpus: 0.15
+        mem_limit: 500mb
     teamcity-agent-3:
         restart: always
         build:
@@ -38,6 +42,8 @@ services:
             SERVER_URL: http://teamcity-server:8111/
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
+        cpus: 0.15
+        mem_limit: 500mb
     # also run the server
     teamcity-server:
         restart: always
@@ -48,6 +54,8 @@ services:
         ports:
             - 80:8111
         privileged: true
+        cpus: 0.4
+        mem_limit: 2gb
     # and for some of the modules, postgresql is required
     postgres:
         restart: always
@@ -59,6 +67,8 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
+        cpus: 0.1
+        mem_limit: 200mb
 
 networks:
   default:
