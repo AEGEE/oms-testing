@@ -15,7 +15,7 @@ services:
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
         cpus: 0.15
-        mem_limit: 500mb
+        mem_limit: 900mb
     teamcity-agent-2:
         restart: always
         build:
@@ -29,7 +29,7 @@ services:
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
         cpus: 0.15
-        mem_limit: 500mb
+        mem_limit: 900mb
     teamcity-agent-3:
         restart: always
         build:
@@ -43,7 +43,7 @@ services:
             DOCKER_IN_DOCKER: start
         privileged: true # for running Docker in Docker
         cpus: 0.15
-        mem_limit: 500mb
+        mem_limit: 900mb
     # also run the server
     teamcity-server:
         restart: always
@@ -55,7 +55,7 @@ services:
             - 80:8111
         privileged: true
         cpus: 0.4
-        mem_limit: 2gb
+        mem_limit: 1gb
     # and for some of the modules, postgresql is required
     postgres:
         restart: always
